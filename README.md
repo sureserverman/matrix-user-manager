@@ -122,4 +122,4 @@ chrome/                  # Chrome extension (Manifest V3)
 
 ## License
 
-MIT
+BSD 2-Clause. See [LICENSE.md](LICENSE.md).
