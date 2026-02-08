@@ -1,1 +1,8 @@
-matrix-user-manager.zip
+# Build artifacts
+*.zip
+
+# Claude Code local settings
+.claude/
+
+# Plans / internal docs
+docs/plans/
