@@ -49,8 +49,8 @@
         <td>${escapeHtml(server.url)}</td>
         <td>${escapeHtml(server.domain)}</td>
         <td>
-          <button class="btn-edit" data-id="${server.id}">Edit</button>
-          <button class="btn-delete" data-id="${server.id}">Delete</button>
+          <button class="btn-edit" data-id="${escapeHtml(server.id)}">Edit</button>
+          <button class="btn-delete" data-id="${escapeHtml(server.id)}">Delete</button>
         </td>
       `;
       serverList.appendChild(row);

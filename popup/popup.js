@@ -19,10 +19,10 @@
       card.innerHTML = `
         <div class="server-header">
           <span class="server-url">${escapeHtml(server.url)}</span>
-          <button class="btn-add-user" data-id="${server.id}">Add User</button>
+          <button class="btn-add-user" data-id="${escapeHtml(server.id)}">Add User</button>
         </div>
         <div class="server-domain">${escapeHtml(server.domain)}</div>
-        <div class="user-form-container hidden" data-form-id="${server.id}">
+        <div class="user-form-container hidden">
           <div class="user-form">
             <label>Username
               <input type="text" class="input-username" placeholder="newuser">
@@ -34,7 +34,7 @@
               <input type="text" class="input-displayname" placeholder="New User">
             </label>
             <div class="form-actions">
-              <button class="btn-create" data-id="${server.id}">Create</button>
+              <button class="btn-create" data-id="${escapeHtml(server.id)}">Create</button>
               <button class="btn-cancel-user">Cancel</button>
             </div>
             <div class="user-message hidden"></div>
@@ -46,9 +46,7 @@
 
     serverListEl.querySelectorAll(".btn-add-user").forEach(btn => {
       btn.addEventListener("click", () => {
-        const formContainer = serverListEl.querySelector(
-          `.user-form-container[data-form-id="${btn.dataset.id}"]`
-        );
+        const formContainer = btn.closest(".server-card").querySelector(".user-form-container");
         formContainer.classList.toggle("hidden");
       });
     });
