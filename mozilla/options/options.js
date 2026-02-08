@@ -36,38 +36,42 @@
 
   async function renderServers() {
     const servers = await Storage.getServers();
-    serverList.innerHTML = "";
+    while (serverList.firstChild) serverList.firstChild.remove();
     if (servers.length === 0) {
       const row = document.createElement("tr");
-      row.innerHTML = '<td colspan="3">No servers added yet.</td>';
+      const td = document.createElement("td");
+      td.setAttribute("colspan", "3");
+      td.textContent = "No servers added yet.";
+      row.appendChild(td);
       serverList.appendChild(row);
       return;
     }
     servers.forEach(server => {
       const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${escapeHtml(server.url)}</td>
-        <td>${escapeHtml(server.domain)}</td>
-        <td>
-          <button class="btn-edit" data-id="${escapeHtml(server.id)}">Edit</button>
-          <button class="btn-delete" data-id="${escapeHtml(server.id)}">Delete</button>
-        </td>
-      `;
+
+      const tdUrl = document.createElement("td");
+      tdUrl.textContent = server.url;
+      row.appendChild(tdUrl);
+
+      const tdDomain = document.createElement("td");
+      tdDomain.textContent = server.domain;
+      row.appendChild(tdDomain);
+
+      const tdActions = document.createElement("td");
+      const btnEdit = document.createElement("button");
+      btnEdit.className = "btn-edit";
+      btnEdit.textContent = "Edit";
+      btnEdit.addEventListener("click", () => handleEdit(server.id));
+      const btnDel = document.createElement("button");
+      btnDel.className = "btn-delete";
+      btnDel.textContent = "Delete";
+      btnDel.addEventListener("click", () => handleDelete(server.id));
+      tdActions.appendChild(btnEdit);
+      tdActions.appendChild(btnDel);
+      row.appendChild(tdActions);
+
       serverList.appendChild(row);
     });
-
-    serverList.querySelectorAll(".btn-edit").forEach(btn => {
-      btn.addEventListener("click", () => handleEdit(btn.dataset.id));
-    });
-    serverList.querySelectorAll(".btn-delete").forEach(btn => {
-      btn.addEventListener("click", () => handleDelete(btn.dataset.id));
-    });
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement("div");
-    div.textContent = str;
-    return div.innerHTML;
   }
 
   async function handleEdit(id) {
@@ -75,7 +79,7 @@
     const server = servers.find(s => s.id === id);
     if (!server) return;
     editingId = id;
-    showForm("Edit Server", server.url);
+    showForm("Edit Server", server.domain);
   }
 
   async function handleDelete(id) {
@@ -85,35 +89,32 @@
   }
 
   async function handleSave() {
-    const url = inputUrl.value.trim();
+    const domain = inputUrl.value.trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
     const username = inputUsername.value.trim();
     const password = inputPassword.value;
 
-    if (!url || !username || !password) {
+    if (!domain || !username || !password) {
       showMessage("All fields are required.", true);
       return;
     }
 
-    let domain;
-    try {
-      domain = MatrixApi.extractDomain(url);
-    } catch (e) {
-      showMessage(e.message, true);
-      return;
-    }
+    const fullUsername = `@${username}:${domain}`;
 
     btnSave.disabled = true;
-    btnSave.textContent = "Connecting...";
+    btnSave.textContent = "Discovering server...";
 
     try {
-      const accessToken = await MatrixApi.login(url, username, password);
+      const serverUrl = await MatrixApi.discoverServer(domain);
+
+      btnSave.textContent = "Connecting...";
+      const accessToken = await MatrixApi.login(serverUrl, fullUsername, password);
 
       if (editingId) {
-        await Storage.updateServer(editingId, { url, domain, accessToken });
+        await Storage.updateServer(editingId, { url: serverUrl, domain, accessToken });
       } else {
         await Storage.addServer({
           id: Storage.generateId(),
-          url,
+          url: serverUrl,
           domain,
           accessToken
         });

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="server-list"></div>
+  <div id="empty-state" class="hidden">
+    <p>No servers configured.</p>
+    <button id="btn-open-settings" type="button">Open Settings</button>
+  </div>
+
+  <footer>
+    <a href="#" id="link-settings">Settings</a>
+  </footer>
+
+  <script src="../lib/storage.js"></script>
+  <script src="../lib/matrix-api.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

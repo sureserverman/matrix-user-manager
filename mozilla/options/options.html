@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Matrix User Manager — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <h1>Matrix User Manager — Settings</h1>
+
+  <button id="btn-add-server" type="button">Add Server</button>
+
+  <div id="server-form" class="hidden">
+    <h2 id="form-title">Add Server</h2>
+    <label>Server Domain
+      <input type="text" id="input-url" placeholder="example.com">
+    </label>
+    <label>Admin Username
+      <input type="text" id="input-username" placeholder="admin">
+    </label>
+    <label>Admin Password
+      <input type="password" id="input-password">
+    </label>
+    <div class="form-actions">
+      <button id="btn-save" type="button">Save</button>
+      <button id="btn-cancel" type="button">Cancel</button>
+    </div>
+    <div id="form-message" class="hidden"></div>
+  </div>
+
+  <table id="server-table">
+    <thead>
+      <tr>
+        <th>Server URL</th>
+        <th>Domain</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="server-list"></tbody>
+  </table>
+
+  <script src="../lib/storage.js"></script>
+  <script src="../lib/matrix-api.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
