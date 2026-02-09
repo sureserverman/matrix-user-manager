@@ -133,10 +133,12 @@
         username, password, displayname
       );
       messageEl.textContent = result.message;
-      messageEl.className = "user-message msg-success";
-      formContainer.querySelector(".input-username").value = "";
-      formContainer.querySelector(".input-password").value = "";
-      formContainer.querySelector(".input-displayname").value = "";
+      messageEl.className = result.success ? "user-message msg-success" : "user-message msg-error";
+      if (result.success) {
+        formContainer.querySelector(".input-username").value = "";
+        formContainer.querySelector(".input-password").value = "";
+        formContainer.querySelector(".input-displayname").value = "";
+      }
     } catch (e) {
       messageEl.textContent = e.message;
       messageEl.className = "user-message msg-error";

@@ -82,6 +82,11 @@ const MatrixApi = {
 
     const status = response.status;
     const fullUserId = `@${username}:${domain}`;
+    const body = await response.json().catch(() => null);
+
+    if (!body) {
+      return { success: false, message: "Empty response from server. Check your server configuration." };
+    }
 
     if (status === 201) {
       return { success: true, message: `User ${fullUserId} created` };
