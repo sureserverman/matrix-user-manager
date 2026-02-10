@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Matrix User Manager",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Manage Matrix/Synapse servers and provision users",
   "permissions": [
     "storage",
