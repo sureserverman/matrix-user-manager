@@ -1,0 +1,38 @@
+name: Publish to AMO
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "number=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Set version in mozilla manifest
+        run: >
+          jq --arg v "${{ steps.version.outputs.number }}"
+          '.version = $v' mozilla/manifest.json > tmp.json
+          && mv tmp.json mozilla/manifest.json
+
+      - name: Set version in chrome manifest
+        run: >
+          jq --arg v "${{ steps.version.outputs.number }}"
+          '.version = $v' chrome/manifest.json > tmp.json
+          && mv tmp.json chrome/manifest.json
+
+      - name: Build .xpi
+        run: cd mozilla && zip -r ../matrix-user-manager.xpi .
+
+      - name: Publish to AMO
+        uses: browser-actions/release-firefox-addon@latest
+        with:
+          addon-id: 'matrix-user-manager@sureserverman'
+          addon-path: matrix-user-manager.xpi
+          auth-api-issuer: ${{ secrets.AMO_API_KEY }}
+          auth-api-secret: ${{ secrets.AMO_API_SECRET }}
