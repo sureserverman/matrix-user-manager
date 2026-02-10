@@ -22,13 +22,13 @@ Matrix User Manager is a lightweight browser extension that lets server administ
 - **User management** — view all users, lock/unlock accounts, remove users
 - **Media cleanup** — automatically deletes user media when removing accounts
 - **Dark mode** — adapts to your browser's theme
-- **Privacy-first** — no data collection, no tracking, credentials never stored
+- **Privacy-first** — no data collection, no tracking, passwords never stored
 
 ## Installation
 
 ### Firefox / Tor Browser / Mullvad Browser
 
-1. Download the latest `.xpi` from [Releases](#) or [addons.mozilla.org](#)
+1. Download the latest `.xpi` from [addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/matrix-synapse-user-manager/)
 2. Open the browser and navigate to `about:addons`
 3. Click the gear icon and select "Install Add-on From File"
 4. Select the downloaded `.xpi` file
@@ -41,7 +41,7 @@ Matrix User Manager is a lightweight browser extension that lets server administ
 
 ### Chrome / Chromium / Brave / Edge
 
-1. Download the latest release from [Chrome Web Store](#)
+1. Download the latest release from the Chrome Web Store (coming soon)
 
 **For development:**
 
@@ -75,7 +75,7 @@ Matrix User Manager is a lightweight browser extension that lets server administ
 
 ## Project Structure
 
-```
+```text
 mozilla/                 # Firefox extension (Manifest V2)
   manifest.json
   lib/
@@ -91,7 +91,7 @@ mozilla/                 # Firefox extension (Manifest V2)
 
 chrome/                  # Chrome extension (Manifest V3)
   (same structure, adapted for chrome.* APIs
-   and optional host permissions)
+   and optional host permissions.)
 ```
 
 ## API Endpoints Used
@@ -116,8 +116,8 @@ chrome/                  # Chrome extension (Manifest V3)
 
 ## Requirements
 
-- **Firefox** 142+ / **Tor Browser** / **Mullvad Browser** (latest)
-- **Chrome** 116+ / **Chromium** / **Brave** / **Edge**
+- **Firefox** 109+ / **Tor Browser** / **Mullvad Browser** (latest)
+- **Chrome** 88+ / **Chromium** / **Brave** / **Edge**
 - **Synapse** server with admin API access
 
 ## License
