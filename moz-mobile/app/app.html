@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Matrix User Manager</title>
+  <link rel="icon" id="favicon" type="image/png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header>
+    <h1>Matrix User Manager</h1>
+    <a href="#" id="link-settings">Settings</a>
+  </header>
+
+  <main>
+    <div id="server-list"></div>
+    <div id="empty-state" class="hidden">
+      <p>No servers configured.</p>
+      <button id="btn-open-settings" type="button">Open Settings</button>
+    </div>
+  </main>
+
+  <script src="../lib/storage.js"></script>
+  <script src="../lib/matrix-api.js"></script>
+  <script src="../lib/nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
