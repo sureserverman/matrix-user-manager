@@ -2,6 +2,11 @@
   "manifest_version": 2,
   "name": "Matrix User Manager",
   "version": "1.2",
+  "web_accessible_resources": [
+    "icons/icon-128.png",
+    "icons/icon-96.png",
+    "icons/icon-48.png"
+  ],
   "description": "Manage Matrix/Synapse servers and provision users",
   "permissions": [
     "storage",
@@ -30,7 +35,7 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "matrix-user-manager@sureserverman",
+      "id": "matrix-user-manager-mobile@sureserverman",
       "strict_min_version": "109.0",
       "data_collection_permissions": {
         "required": ["none"]
