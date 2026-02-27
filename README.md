@@ -2,124 +2,63 @@
   <img src="icon.png" alt="Matrix User Manager" width="128" height="128">
 </p>
 
-<h1 align="center">Matrix User Manager</h1>
+# Matrix User Manager
 
-<p align="center">
-  A browser extension for managing users on Matrix/Synapse servers.<br>
-  Available for Firefox, Tor Browser, Mullvad Browser, and Chromium-based browsers.
-</p>
+Browser extension for Matrix/Synapse admins to add servers and manage users fast.
 
----
+## Install
 
-## Overview
+- Firefox desktop: <https://addons.mozilla.org/en-US/firefox/addon/matrix-synapse-user-manager/>
+- Firefox for Android: <https://addons.mozilla.org/en-GB/firefox/addon/matrix-user-manager-android/>
+- Chrome Web Store: <https://chromewebstore.google.com/detail/matrix-user-manager/eghhpddhhehnnchhecakmhddbiojogig>
+- Firefox desktop / Tor Browser / Mullvad Browser: load `mozilla/manifest.json` as a temporary add-on
 
-Matrix User Manager is a lightweight browser extension that lets server administrators provision, manage, and remove user accounts on Matrix/Synapse servers directly from the browser toolbar.
+## Quick Start
 
-## Features
+1. Open the extension and go to **Settings**.
+2. Add a homeserver domain (for example `example.com`) plus admin credentials.
+3. Create users from the popup, or open **Manage** to list, lock/unlock, and remove users.
 
-- **Server discovery** — enter a domain, the extension finds the server via `.well-known`
-- **User creation** — create accounts with username, password, and display name
-- **User management** — view all users, lock/unlock accounts, remove users
-- **Media cleanup** — automatically deletes user media when removing accounts
-- **Dark mode** — adapts to your browser's theme
-- **Privacy-first** — no data collection, no tracking, passwords never stored
+## What It Does
 
-## Installation
+- Discovers homeserver base URL through `/.well-known/matrix/client`
+- Signs in with admin credentials and stores server config locally
+- Creates users with username, password, and display name
+- Lists users with pagination (`limit=100`) on Synapse admin API
+- Locks/unlocks accounts and deactivates users with `erase: true`
+- Deletes user media files before deactivation
 
-### Firefox / Tor Browser / Mullvad Browser
+## Privacy and Permissions
 
-1. Download the latest `.xpi` from [addons.mozilla.org](https://addons.mozilla.org/en-US/firefox/addon/matrix-synapse-user-manager/)
-2. Open the browser and navigate to `about:addons`
-3. Click the gear icon and select "Install Add-on From File"
-4. Select the downloaded `.xpi` file
+- Stored locally via `browser.storage.local` / `chrome.storage.local`
+- Admin password is used for login flow and not persisted
+- Access token is stored locally for subsequent admin actions
+- No telemetry, analytics, or third-party data collection in code
+- Firefox builds request `storage` + network access; Chrome build uses `storage` with optional host permissions
 
-**For development:**
+## Development Load
 
-1. Navigate to `about:debugging#/runtime/this-firefox`
-2. Click "Load Temporary Add-on"
-3. Select `mozilla/manifest.json`
+- Firefox (desktop): `about:debugging#/runtime/this-firefox` -> **Load Temporary Add-on** -> `mozilla/manifest.json`
+- Chrome/Chromium: `chrome://extensions` -> **Developer mode** -> **Load unpacked** -> `chrome/`
+- Firefox Android variant source: `moz-mobile/` (app-style entry + background open behavior)
 
-### Chrome / Chromium / Brave / Edge
-
-1. Download the latest release from the Chrome Web Store (coming soon)
-
-**For development:**
-
-1. Navigate to `chrome://extensions/`
-2. Enable "Developer mode"
-3. Click "Load unpacked"
-4. Select the `chrome/` directory
-
-## Usage
-
-### Adding a Server
-
-1. Click the extension icon and open **Settings**
-2. Click **Add Server**
-3. Enter the server domain (e.g., `example.com`), admin username, and password
-4. The extension discovers the server, authenticates, and saves the connection
-
-### Creating Users
-
-1. Click the extension icon
-2. Click **Add User** next to a server
-3. Fill in the username, password, and display name
-4. Click **Create**
-
-### Managing Users
-
-1. Click the extension icon
-2. Click **Manage** next to a server
-3. A new tab opens with the full user list
-4. Use **Lock** to suspend a user (reversible) or **Remove** to permanently deactivate and erase
-
-## Project Structure
-
-```text
-mozilla/                 # Firefox extension (Manifest V2)
-  manifest.json
-  lib/
-    storage.js           # browser.storage.local CRUD
-    matrix-api.js        # Matrix login, user CRUD, media cleanup
-  popup/
-    popup.html/css/js    # Toolbar popup — server list & user creation
-  options/
-    options.html/css/js  # Settings page — server management
-  manage/
-    manage.html/css/js   # User management page — list, lock, remove
-  icons/                 # Extension icons (16-128px)
-
-chrome/                  # Chrome extension (Manifest V3)
-  (same structure, adapted for chrome.* APIs
-   and optional host permissions.)
-```
-
-## API Endpoints Used
+## API Surface
 
 | Endpoint | Purpose |
 |----------|---------|
-| `GET /.well-known/matrix/client` | Server discovery |
-| `POST /_matrix/client/v3/login` | Admin authentication |
-| `PUT /_synapse/admin/v2/users/{userId}` | Create/update/lock users |
-| `GET /_synapse/admin/v2/users` | List all users |
-| `GET /_synapse/admin/v1/users/{userId}/media` | List user media |
-| `DELETE /_synapse/admin/v1/media/{serverName}/{mediaId}` | Delete media |
-| `POST /_synapse/admin/v1/deactivate/{userId}` | Deactivate user |
-
-## Privacy & Security
-
-- All data stored locally in the browser — nothing sent to third parties
-- Admin passwords used only during login, never persisted
-- Only access tokens are stored, scoped to the local browser profile
-- No analytics, telemetry, or tracking of any kind
-- Compatible with privacy-focused browsers (Tor Browser, Mullvad Browser)
+| `GET /.well-known/matrix/client` | Discover homeserver |
+| `POST /_matrix/client/v3/login` | Admin login |
+| `PUT /_synapse/admin/v2/users/{userId}` | Create/update/lock user |
+| `GET /_synapse/admin/v2/users` | List users |
+| `GET /_synapse/admin/v1/users/{userId}/media` | List media by user |
+| `DELETE /_synapse/admin/v1/media/{serverName}/{mediaId}` | Delete media item |
+| `POST /_synapse/admin/v1/deactivate/{userId}` | Deactivate and erase user |
 
 ## Requirements
 
-- **Firefox** 109+ / **Tor Browser** / **Mullvad Browser** (latest)
-- **Chrome** 88+ / **Chromium** / **Brave** / **Edge**
-- **Synapse** server with admin API access
+- Synapse homeserver with admin API access
+- Firefox 109+ (desktop/Android), Tor Browser, Mullvad Browser, or Chromium-based browser (Chrome 88+ for the MV3 build)
 
 ## License
 
-BSD 2-Clause. See [LICENSE.md](LICENSE.md).
+BSD-2-Clause. See [LICENSE.md](LICENSE.md).
