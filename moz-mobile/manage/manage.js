@@ -12,6 +12,7 @@
 
   let server = null;
   let nextToken = "0";
+  let currentUserId = null;
 
   function showStatus(text, type) {
     statusEl.textContent = text;
@@ -22,6 +23,7 @@
     const row = document.createElement("tr");
     const isDeactivated = user.deactivated === 1;
     const isLocked = !!user.locked;
+    const isSelf = currentUserId && user.name === currentUserId;
 
     const tdName = document.createElement("td");
     tdName.textContent = user.name;
@@ -46,13 +48,23 @@
       lockBtn.className = isLocked ? "btn-unlock" : "btn-lock";
       lockBtn.textContent = isLocked ? "Unlock" : "Lock";
       lockBtn.dataset.locked = String(isLocked);
-      lockBtn.addEventListener("click", () => handleLock(user.name, lockBtn));
+      if (isSelf) {
+        lockBtn.disabled = true;
+        lockBtn.title = "You cannot lock yourself";
+      } else {
+        lockBtn.addEventListener("click", () => handleLock(user.name, lockBtn));
+      }
       actionsDiv.appendChild(lockBtn);
 
       const removeBtn = document.createElement("button");
       removeBtn.className = "btn-remove";
       removeBtn.textContent = "Remove";
-      removeBtn.addEventListener("click", () => handleRemove(user.name, row, removeBtn));
+      if (isSelf) {
+        removeBtn.disabled = true;
+        removeBtn.title = "You cannot remove yourself";
+      } else {
+        removeBtn.addEventListener("click", () => handleRemove(user.name, row, removeBtn));
+      }
       actionsDiv.appendChild(removeBtn);
 
       tdActions.appendChild(actionsDiv);
@@ -155,6 +167,11 @@
 
     pageTitle.textContent = `Manage Users — ${server.domain}`;
     document.title = `Manage Users — ${server.domain}`;
+    try {
+      currentUserId = await MatrixApi.whoami(server.url, server.accessToken);
+    } catch (_) {
+      currentUserId = null;
+    }
     await loadUsers();
   }
 

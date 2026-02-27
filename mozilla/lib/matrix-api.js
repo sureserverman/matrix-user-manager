@@ -50,6 +50,22 @@ const MatrixApi = {
     return data.access_token;
   },
 
+  async whoami(serverUrl, accessToken) {
+    const url = `${serverUrl.replace(/\/+$/, "")}/_matrix/client/v3/account/whoami`;
+    const response = await fetch(url, {
+      headers: { "Authorization": `Bearer ${accessToken}` }
+    });
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+      }
+      const body = await response.json().catch(() => ({}));
+      throw new Error(body.error || `Request failed (${response.status})`);
+    }
+    const data = await response.json();
+    return data.user_id || null;
+  },
+
   async createUser(serverUrl, accessToken, domain, username, password, displayname) {
     const userId = `@${username}:${domain}`;
     const url = `${serverUrl.replace(/\/+$/, "")}/_synapse/admin/v2/users/${userId}`;
