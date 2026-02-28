@@ -7,6 +7,10 @@
     "message": "Matrix/Synapseサーバーとユーザーを管理",
     "description": "Description of the extension."
   },
+  "back": {
+    "message": "戻る",
+    "description": "Back to app / home."
+  },
   "optionsTitle": {
     "message": "Matrix User Manager — 設定",
     "description": "Options page title."

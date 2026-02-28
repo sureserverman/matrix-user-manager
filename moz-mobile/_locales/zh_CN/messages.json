@@ -7,6 +7,10 @@
     "message": "管理 Matrix/Synapse 服务器和用户",
     "description": "Description of the extension."
   },
+  "back": {
+    "message": "返回",
+    "description": "Back to app / home."
+  },
   "optionsTitle": {
     "message": "Matrix User Manager — 设置",
     "description": "Options page title."

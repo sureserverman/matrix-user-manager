@@ -61,11 +61,7 @@
         formContainer.classList.toggle("hidden");
       });
       const btnManage = createButton("btn-manage-users", "manage");
-      btnManage.addEventListener("click", () => {
-        browser.tabs.create({
-          url: browser.runtime.getURL("manage/manage.html?server=" + encodeURIComponent(server.id))
-        });
-      });
+      btnManage.addEventListener("click", () => Nav.openManage(server.id));
       buttonsDiv.appendChild(btnAddUser);
       buttonsDiv.appendChild(btnManage);
       header.appendChild(buttonsDiv);

@@ -1,5 +1,6 @@
 (function () {
   document.getElementById("favicon").href = browser.runtime.getURL("icons/icon-48.png");
+  document.getElementById("link-back").href = browser.runtime.getURL("app/app.html");
 
   const btnAdd = document.getElementById("btn-add-server");
   const form = document.getElementById("server-form");

@@ -7,6 +7,10 @@
     "message": "Manage Matrix/Synapse servers and provision users",
     "description": "Description of the extension."
   },
+  "back": {
+    "message": "Back",
+    "description": "Back to app / home."
+  },
   "optionsTitle": {
     "message": "Matrix User Manager — Settings",
     "description": "Options page title."
