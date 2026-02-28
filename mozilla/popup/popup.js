@@ -2,18 +2,31 @@
   const serverListEl = document.getElementById("server-list");
   const emptyState = document.getElementById("empty-state");
 
-  function createInput(type, className, placeholder) {
+  function t(key, subs) {
+    if (subs !== undefined) subs = Array.isArray(subs) ? subs : [subs];
+    return browser.i18n.getMessage(key, subs) || key;
+  }
+
+  async function reloadManageTabIfOpen(serverId) {
+    const manageUrl = browser.runtime.getURL("manage/manage.html?server=" + encodeURIComponent(serverId));
+    const tabs = await browser.tabs.query({ url: manageUrl });
+    for (const tab of tabs) {
+      if (tab.id) await browser.tabs.reload(tab.id);
+    }
+  }
+
+  function createInput(type, className, placeholderKey) {
     const input = document.createElement("input");
     input.type = type;
     input.className = className;
-    if (placeholder) input.placeholder = placeholder;
+    if (placeholderKey) input.placeholder = t(placeholderKey);
     return input;
   }
 
-  function createButton(className, text) {
+  function createButton(className, textKey) {
     const btn = document.createElement("button");
     btn.className = className;
-    btn.textContent = text;
+    btn.textContent = t(textKey);
     return btn;
   }
 
@@ -32,7 +45,6 @@
       const card = document.createElement("div");
       card.className = "server-card";
 
-      // Header
       const header = document.createElement("div");
       header.className = "server-header";
       const urlSpan = document.createElement("span");
@@ -42,11 +54,11 @@
 
       const buttonsDiv = document.createElement("div");
       buttonsDiv.className = "server-buttons";
-      const btnAddUser = createButton("btn-add-user", "Add User");
+      const btnAddUser = createButton("btn-add-user", "addUser");
       btnAddUser.addEventListener("click", () => {
         formContainer.classList.toggle("hidden");
       });
-      const btnManage = createButton("btn-manage-users", "Manage");
+      const btnManage = createButton("btn-manage-users", "manage");
       btnManage.addEventListener("click", () => {
         browser.tabs.create({
           url: browser.runtime.getURL("manage/manage.html?server=" + encodeURIComponent(server.id))
@@ -57,41 +69,39 @@
       header.appendChild(buttonsDiv);
       card.appendChild(header);
 
-      // Domain
       const domainDiv = document.createElement("div");
       domainDiv.className = "server-domain";
       domainDiv.textContent = server.domain;
       card.appendChild(domainDiv);
 
-      // User form
       const formContainer = document.createElement("div");
       formContainer.className = "user-form-container hidden";
       const userForm = document.createElement("div");
       userForm.className = "user-form";
 
       const labelUser = document.createElement("label");
-      labelUser.textContent = "Username";
-      const inputUser = createInput("text", "input-username", "newuser");
+      labelUser.textContent = t("username");
+      const inputUser = createInput("text", "input-username", "usernamePlaceholder");
       labelUser.appendChild(inputUser);
       userForm.appendChild(labelUser);
 
       const labelPass = document.createElement("label");
-      labelPass.textContent = "Password";
+      labelPass.textContent = t("password");
       const inputPass = createInput("password", "input-password");
       labelPass.appendChild(inputPass);
       userForm.appendChild(labelPass);
 
       const labelDisplay = document.createElement("label");
-      labelDisplay.textContent = "Display Name";
-      const inputDisplay = createInput("text", "input-displayname", "New User");
+      labelDisplay.textContent = t("displayName");
+      const inputDisplay = createInput("text", "input-displayname", "displayNamePlaceholder");
       labelDisplay.appendChild(inputDisplay);
       userForm.appendChild(labelDisplay);
 
       const formActions = document.createElement("div");
       formActions.className = "form-actions";
-      const btnCreate = createButton("btn-create", "Create");
+      const btnCreate = createButton("btn-create", "create");
       btnCreate.addEventListener("click", () => handleCreateUser(server.id, btnCreate, formContainer));
-      const btnCancel = createButton("btn-cancel-user", "Cancel");
+      const btnCancel = createButton("btn-cancel-user", "cancel");
       btnCancel.addEventListener("click", () => formContainer.classList.add("hidden"));
       formActions.appendChild(btnCreate);
       formActions.appendChild(btnCancel);
@@ -119,34 +129,37 @@
     const messageEl = formContainer.querySelector(".user-message");
 
     if (!username || !password || !displayname) {
-      messageEl.textContent = "All fields are required.";
+      messageEl.textContent = t("allFieldsRequired");
       messageEl.className = "user-message msg-error";
       return;
     }
 
     btn.disabled = true;
-    btn.textContent = "Creating...";
+    btn.textContent = t("creating");
 
     try {
       const result = await MatrixApi.createUser(
         server.url, server.accessToken, server.domain,
         username, password, displayname
       );
-      messageEl.textContent = result.message;
+      messageEl.textContent = result.messageKey ? t(result.messageKey, result.messageSubs || []) : result.message;
       messageEl.className = result.success ? "user-message msg-success" : "user-message msg-error";
       if (result.success) {
         formContainer.querySelector(".input-username").value = "";
         formContainer.querySelector(".input-password").value = "";
         formContainer.querySelector(".input-displayname").value = "";
+        reloadManageTabIfOpen(serverId);
       }
     } catch (e) {
-      messageEl.textContent = e.message;
+      messageEl.textContent = e && e.errorKey ? t(e.errorKey, e.errorSubs || []) : (e && e.message) || String(e);
       messageEl.className = "user-message msg-error";
     } finally {
       btn.disabled = false;
-      btn.textContent = "Create";
+      btn.textContent = t("create");
     }
   }
+
+  I18n.applyDocument();
 
   document.getElementById("link-settings").addEventListener("click", (e) => {
     e.preventDefault();

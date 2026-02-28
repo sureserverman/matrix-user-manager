@@ -1,0 +1,367 @@
+{
+  "extensionName": {
+    "message": "Matrix User Manager",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Gestionar servidores Matrix/Synapse y aprovisionar usuarios",
+    "description": "Description of the extension."
+  },
+  "optionsTitle": {
+    "message": "Matrix User Manager — Configuración",
+    "description": "Options page title."
+  },
+  "addServer": {
+    "message": "Añadir servidor",
+    "description": "Add server button and form title."
+  },
+  "editServer": {
+    "message": "Editar servidor",
+    "description": "Edit server form title."
+  },
+  "serverDomain": {
+    "message": "Dominio del servidor",
+    "description": "Server domain label."
+  },
+  "serverDomainPlaceholder": {
+    "message": "ejemplo.com",
+    "description": "Server domain input placeholder."
+  },
+  "adminUsername": {
+    "message": "Usuario administrador",
+    "description": "Admin username label."
+  },
+  "adminUsernamePlaceholder": {
+    "message": "admin",
+    "description": "Admin username placeholder."
+  },
+  "adminPassword": {
+    "message": "Contraseña de administrador",
+    "description": "Admin password label."
+  },
+  "save": {
+    "message": "Guardar",
+    "description": "Save button."
+  },
+  "cancel": {
+    "message": "Cancelar",
+    "description": "Cancel button."
+  },
+  "serverUrl": {
+    "message": "URL del servidor",
+    "description": "Server URL table header."
+  },
+  "domain": {
+    "message": "Dominio",
+    "description": "Domain table header."
+  },
+  "actions": {
+    "message": "Acciones",
+    "description": "Actions table header."
+  },
+  "edit": {
+    "message": "Editar",
+    "description": "Edit button."
+  },
+  "delete": {
+    "message": "Eliminar",
+    "description": "Delete button."
+  },
+  "noServersYet": {
+    "message": "Aún no hay servidores añadidos.",
+    "description": "Empty server list message."
+  },
+  "deleteServerConfirm": {
+    "message": "¿Eliminar este servidor?",
+    "description": "Delete server confirmation."
+  },
+  "allFieldsRequired": {
+    "message": "Todos los campos son obligatorios.",
+    "description": "Validation message."
+  },
+  "discoveringServer": {
+    "message": "Buscando servidor...",
+    "description": "Status while discovering."
+  },
+  "connecting": {
+    "message": "Conectando...",
+    "description": "Status while connecting."
+  },
+  "serverSavedSuccess": {
+    "message": "Servidor guardado correctamente.",
+    "description": "Success message after save."
+  },
+  "manageUsers": {
+    "message": "Gestionar usuarios",
+    "description": "Manage page heading."
+  },
+  "userId": {
+    "message": "ID de usuario",
+    "description": "User ID table header."
+  },
+  "displayName": {
+    "message": "Nombre para mostrar",
+    "description": "Display name table header."
+  },
+  "loadMore": {
+    "message": "Cargar más",
+    "description": "Load more button."
+  },
+  "loadingUsers": {
+    "message": "Cargando usuarios...",
+    "description": "Status while loading users."
+  },
+  "noUsersFound": {
+    "message": "No se encontraron usuarios.",
+    "description": "Empty user list."
+  },
+  "usersLoaded": {
+    "message": "$count$ usuarios cargados.",
+    "description": "User count status.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deactivated": {
+    "message": "Desactivado",
+    "description": "Deactivated user label."
+  },
+  "lock": {
+    "message": "Bloquear",
+    "description": "Lock button."
+  },
+  "unlock": {
+    "message": "Desbloquear",
+    "description": "Unlock button."
+  },
+  "remove": {
+    "message": "Eliminar",
+    "description": "Remove button."
+  },
+  "cannotLockSelf": {
+    "message": "No puedes bloquear tu propia cuenta",
+    "description": "Tooltip for disabled lock on self."
+  },
+  "cannotRemoveSelf": {
+    "message": "No puedes eliminar tu propia cuenta",
+    "description": "Tooltip for disabled remove on self."
+  },
+  "locking": {
+    "message": "Bloqueando...",
+    "description": "Status while locking."
+  },
+  "unlocking": {
+    "message": "Desbloqueando...",
+    "description": "Status while unlocking."
+  },
+  "lockedSuccess": {
+    "message": "$user$ bloqueado.",
+    "description": "Lock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "unlockedSuccess": {
+    "message": "$user$ desbloqueado.",
+    "description": "Unlock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeConfirm": {
+    "message": "¿Eliminar usuario $user$? Se desactivará y borrará la cuenta.",
+    "description": "Remove user confirmation.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removing": {
+    "message": "Eliminando...",
+    "description": "Status while removing."
+  },
+  "removeSuccess": {
+    "message": "$user$ ha sido eliminado.",
+    "description": "Remove success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaDeleted": {
+    "message": " ($count$ archivos de medios eliminados)",
+    "description": "Media deleted suffix.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServerSpecified": {
+    "message": "No se especificó servidor.",
+    "description": "Error when no server in URL."
+  },
+  "serverNotFound": {
+    "message": "Servidor no encontrado.",
+    "description": "Error when server id invalid."
+  },
+  "manageUsersTitle": {
+    "message": "Gestionar usuarios — $domain$",
+    "description": "Manage page title with domain.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServersConfigured": {
+    "message": "No hay servidores configurados.",
+    "description": "Popup empty state."
+  },
+  "openSettings": {
+    "message": "Abrir configuración",
+    "description": "Open settings button."
+  },
+  "settings": {
+    "message": "Configuración",
+    "description": "Settings link."
+  },
+  "addUser": {
+    "message": "Añadir usuario",
+    "description": "Add user button."
+  },
+  "manage": {
+    "message": "Gestionar",
+    "description": "Manage users button."
+  },
+  "username": {
+    "message": "Usuario",
+    "description": "Username form label."
+  },
+  "password": {
+    "message": "Contraseña",
+    "description": "Password form label."
+  },
+  "usernamePlaceholder": {
+    "message": "nuevousuario",
+    "description": "Username placeholder."
+  },
+  "displayNamePlaceholder": {
+    "message": "Nuevo usuario",
+    "description": "Display name placeholder."
+  },
+  "create": {
+    "message": "Crear",
+    "description": "Create button."
+  },
+  "creating": {
+    "message": "Creando...",
+    "description": "Status while creating user."
+  },
+  "errCannotReachDomain": {
+    "message": "Cannot reach $domain$. Check the domain and your network connection.",
+    "description": "Discovery network error.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "errWellKnownNotFound": {
+    "message": "No .well-known found at $domain$ ($status$).",
+    "description": "Well-known fetch failed.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      },
+      "status": {
+        "content": "$2"
+      }
+    }
+  },
+  "errInvalidWellKnown": {
+    "message": "Invalid .well-known response: missing m.homeserver base_url",
+    "description": "Invalid well-known JSON."
+  },
+  "errCannotReachServer": {
+    "message": "Cannot reach server. Check the URL and your network connection.",
+    "description": "Generic network error."
+  },
+  "errInvalidCredentials": {
+    "message": "Invalid credentials",
+    "description": "Login 401/403."
+  },
+  "errLoginFailed": {
+    "message": "Login failed ($status$)",
+    "description": "Login error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errNoAccessToken": {
+    "message": "No access token in response",
+    "description": "Login response missing token."
+  },
+  "errTokenExpired": {
+    "message": "Access token expired or invalid. Re-add the server in settings.",
+    "description": "401 on API call."
+  },
+  "errRequestFailed": {
+    "message": "Request failed ($status$)",
+    "description": "API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errCannotReachListMedia": {
+    "message": "Cannot reach server to list media.",
+    "description": "Media list network error."
+  },
+  "errFailedToListMedia": {
+    "message": "Failed to list media ($status$)",
+    "description": "Media list API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errEmptyResponse": {
+    "message": "Empty response from server. Check your server configuration.",
+    "description": "Create user empty body."
+  },
+  "userCreated": {
+    "message": "User $user$ created",
+    "description": "Create user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "userUpdated": {
+    "message": "User $user$ updated",
+    "description": "Update user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "errServerNotFound": {
+    "message": "Server not found",
+    "description": "Storage update with invalid id."
+  }
+}

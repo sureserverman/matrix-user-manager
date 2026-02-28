@@ -2,28 +2,29 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Manage Users</title>
+  <title id="page-title">Manage Users</title>
   <link rel="stylesheet" href="manage.css">
 </head>
 <body>
-  <h1 id="page-title">Manage Users</h1>
+  <h1 id="page-title-heading" data-i18n="manageUsers">Manage Users</h1>
   <div id="status"></div>
   <table id="user-table">
     <thead>
       <tr>
-        <th>User ID</th>
-        <th>Display Name</th>
-        <th>Actions</th>
+        <th data-i18n="userId">User ID</th>
+        <th data-i18n="displayName">Display Name</th>
+        <th data-i18n="actions">Actions</th>
       </tr>
     </thead>
     <tbody id="user-list"></tbody>
   </table>
   <div id="pagination" class="hidden">
-    <button id="btn-load-more" type="button">Load More</button>
+    <button id="btn-load-more" type="button" data-i18n="loadMore">Load More</button>
   </div>
 
   <script src="../lib/storage.js"></script>
   <script src="../lib/matrix-api.js"></script>
+  <script src="../lib/i18n.js"></script>
   <script src="manage.js"></script>
 </body>
 </html>

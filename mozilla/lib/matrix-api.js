@@ -1,3 +1,10 @@
+function apiError(key, subs, fallback) {
+  const err = new Error(fallback);
+  err.errorKey = key;
+  err.errorSubs = subs || [];
+  return err;
+}
+
 const MatrixApi = {
   async discoverServer(domain) {
     const wellKnownUrl = `https://${domain}/.well-known/matrix/client`;
@@ -5,15 +12,15 @@ const MatrixApi = {
     try {
       response = await fetch(wellKnownUrl);
     } catch (e) {
-      throw new Error(`Cannot reach ${domain}. Check the domain and your network connection.`);
+      throw apiError("errCannotReachDomain", [domain], `Cannot reach ${domain}. Check the domain and your network connection.`);
     }
     if (!response.ok) {
-      throw new Error(`No .well-known found at ${domain} (${response.status})`);
+      throw apiError("errWellKnownNotFound", [domain, String(response.status)], `No .well-known found at ${domain} (${response.status})`);
     }
     const data = await response.json().catch(() => ({}));
     const baseUrl = data["m.homeserver"] && data["m.homeserver"]["base_url"];
     if (!baseUrl) {
-      throw new Error("Invalid .well-known response: missing m.homeserver base_url");
+      throw apiError("errInvalidWellKnown", null, "Invalid .well-known response: missing m.homeserver base_url");
     }
     return baseUrl.replace(/\/+$/, "");
   },
@@ -32,20 +39,21 @@ const MatrixApi = {
       })
       });
     } catch (e) {
-      throw new Error("Cannot reach server. Check the URL and your network connection.");
+      throw apiError("errCannotReachServer", null, "Cannot reach server. Check the URL and your network connection.");
     }
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
-        throw new Error("Invalid credentials");
+        throw apiError("errInvalidCredentials", null, "Invalid credentials");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Login failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errLoginFailed", [String(response.status)], `Login failed (${response.status})`);
     }
 
     const data = await response.json();
     if (!data.access_token) {
-      throw new Error("No access token in response");
+      throw apiError("errNoAccessToken", null, "No access token in response");
     }
     return data.access_token;
   },
@@ -57,10 +65,11 @@ const MatrixApi = {
     });
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+        throw apiError("errTokenExpired", null, "Access token expired or invalid. Re-add the server in settings.");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Request failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errRequestFailed", [String(response.status)], `Request failed (${response.status})`);
     }
     const data = await response.json();
     return data.user_id || null;
@@ -85,15 +94,16 @@ const MatrixApi = {
         })
       });
     } catch (e) {
-      throw new Error("Cannot reach server. Check your network connection.");
+      throw apiError("errCannotReachServer", null, "Cannot reach server. Check your network connection.");
     }
 
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+        throw apiError("errTokenExpired", null, "Access token expired or invalid. Re-add the server in settings.");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Request failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errRequestFailed", [String(response.status)], `Request failed (${response.status})`);
     }
 
     const status = response.status;
@@ -101,15 +111,16 @@ const MatrixApi = {
     const body = await response.json().catch(() => null);
 
     if (!body) {
-      return { success: false, message: "Empty response from server. Check your server configuration." };
+      const err = apiError("errEmptyResponse", null, "Empty response from server. Check your server configuration.");
+      return { success: false, message: err.message, messageKey: "errEmptyResponse", messageSubs: [] };
     }
 
     if (status === 201) {
-      return { success: true, message: `User ${fullUserId} created` };
+      return { success: true, messageKey: "userCreated", messageSubs: [fullUserId] };
     } else if (status === 200) {
-      return { success: true, message: `User ${fullUserId} updated` };
+      return { success: true, messageKey: "userUpdated", messageSubs: [fullUserId] };
     }
-    return { success: true, message: `User ${fullUserId} created` };
+    return { success: true, messageKey: "userCreated", messageSubs: [fullUserId] };
   },
 
   async listUsers(serverUrl, accessToken, from) {
@@ -121,14 +132,15 @@ const MatrixApi = {
         headers: { "Authorization": `Bearer ${accessToken}` }
       });
     } catch (e) {
-      throw new Error("Cannot reach server. Check your network connection.");
+      throw apiError("errCannotReachServer", null, "Cannot reach server. Check your network connection.");
     }
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+        throw apiError("errTokenExpired", null, "Access token expired or invalid. Re-add the server in settings.");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Request failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errRequestFailed", [String(response.status)], `Request failed (${response.status})`);
     }
     return await response.json();
   },
@@ -142,11 +154,12 @@ const MatrixApi = {
         headers: { "Authorization": `Bearer ${accessToken}` }
       });
     } catch (e) {
-      throw new Error("Cannot reach server to list media.");
+      throw apiError("errCannotReachListMedia", null, "Cannot reach server to list media.");
     }
     if (!response.ok) {
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Failed to list media (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errFailedToListMedia", [String(response.status)], `Failed to list media (${response.status})`);
     }
     const data = await response.json();
     const mediaIds = (data.media || []).map(m => m.media_id);
@@ -184,14 +197,15 @@ const MatrixApi = {
         body: JSON.stringify({ erase: true })
       });
     } catch (e) {
-      throw new Error("Cannot reach server. Check your network connection.");
+      throw apiError("errCannotReachServer", null, "Cannot reach server. Check your network connection.");
     }
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+        throw apiError("errTokenExpired", null, "Access token expired or invalid. Re-add the server in settings.");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Request failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errRequestFailed", [String(response.status)], `Request failed (${response.status})`);
     }
     const result = await response.json();
     result.media_deleted = mediaDeleted;
@@ -211,14 +225,15 @@ const MatrixApi = {
         body: JSON.stringify({ locked: locked })
       });
     } catch (e) {
-      throw new Error("Cannot reach server. Check your network connection.");
+      throw apiError("errCannotReachServer", null, "Cannot reach server. Check your network connection.");
     }
     if (!response.ok) {
       if (response.status === 401) {
-        throw new Error("Access token expired or invalid. Re-add the server in settings.");
+        throw apiError("errTokenExpired", null, "Access token expired or invalid. Re-add the server in settings.");
       }
       const body = await response.json().catch(() => ({}));
-      throw new Error(body.error || `Request failed (${response.status})`);
+      if (body.error) throw new Error(body.error);
+      throw apiError("errRequestFailed", [String(response.status)], `Request failed (${response.status})`);
     }
     return await response.json();
   }

@@ -9,21 +9,22 @@
 </head>
 <body>
   <header>
-    <h1>Matrix User Manager</h1>
-    <a href="#" id="link-settings">Settings</a>
+    <h1 data-i18n="extensionName">Matrix User Manager</h1>
+    <a href="#" id="link-settings" data-i18n="settings">Settings</a>
   </header>
 
   <main>
     <div id="server-list"></div>
     <div id="empty-state" class="hidden">
-      <p>No servers configured.</p>
-      <button id="btn-open-settings" type="button">Open Settings</button>
+      <p data-i18n="noServersConfigured">No servers configured.</p>
+      <button id="btn-open-settings" type="button" data-i18n="openSettings">Open Settings</button>
     </div>
   </main>
 
   <script src="../lib/storage.js"></script>
   <script src="../lib/matrix-api.js"></script>
   <script src="../lib/nav.js"></script>
+  <script src="../lib/i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

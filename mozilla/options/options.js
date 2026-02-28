@@ -9,11 +9,16 @@
   const btnCancel = document.getElementById("btn-cancel");
   const formMessage = document.getElementById("form-message");
   const serverList = document.getElementById("server-list");
+  const pageTitle = document.getElementById("page-title");
 
   let editingId = null;
 
-  function showForm(title, url) {
-    formTitle.textContent = title;
+  function t(key, subs) {
+    return browser.i18n.getMessage(key, subs) || key;
+  }
+
+  function showForm(titleKey, url) {
+    formTitle.textContent = t(titleKey);
     inputUrl.value = url || "";
     inputUsername.value = "";
     inputPassword.value = "";
@@ -41,7 +46,7 @@
       const row = document.createElement("tr");
       const td = document.createElement("td");
       td.setAttribute("colspan", "3");
-      td.textContent = "No servers added yet.";
+      td.textContent = t("noServersYet");
       row.appendChild(td);
       serverList.appendChild(row);
       return;
@@ -60,11 +65,11 @@
       const tdActions = document.createElement("td");
       const btnEdit = document.createElement("button");
       btnEdit.className = "btn-edit";
-      btnEdit.textContent = "Edit";
+      btnEdit.textContent = t("edit");
       btnEdit.addEventListener("click", () => handleEdit(server.id));
       const btnDel = document.createElement("button");
       btnDel.className = "btn-delete";
-      btnDel.textContent = "Delete";
+      btnDel.textContent = t("delete");
       btnDel.addEventListener("click", () => handleDelete(server.id));
       tdActions.appendChild(btnEdit);
       tdActions.appendChild(btnDel);
@@ -79,11 +84,11 @@
     const server = servers.find(s => s.id === id);
     if (!server) return;
     editingId = id;
-    showForm("Edit Server", server.domain);
+    showForm("editServer", server.domain);
   }
 
   async function handleDelete(id) {
-    if (!confirm("Delete this server?")) return;
+    if (!confirm(t("deleteServerConfirm"))) return;
     await Storage.deleteServer(id);
     await renderServers();
   }
@@ -94,19 +99,19 @@
     const password = inputPassword.value;
 
     if (!domain || !username || !password) {
-      showMessage("All fields are required.", true);
+      showMessage(t("allFieldsRequired"), true);
       return;
     }
 
     const fullUsername = `@${username}:${domain}`;
 
     btnSave.disabled = true;
-    btnSave.textContent = "Discovering server...";
+    btnSave.textContent = t("discoveringServer");
 
     try {
       const serverUrl = await MatrixApi.discoverServer(domain);
 
-      btnSave.textContent = "Connecting...";
+      btnSave.textContent = t("connecting");
       const accessToken = await MatrixApi.login(serverUrl, fullUsername, password);
 
       if (editingId) {
@@ -120,20 +125,24 @@
         });
       }
 
-      showMessage("Server saved successfully.", false);
+      showMessage(t("serverSavedSuccess"), false);
       await renderServers();
       setTimeout(hideForm, 1000);
     } catch (e) {
-      showMessage(e.message, true);
+      const msg = e && e.errorKey ? t(e.errorKey, e.errorSubs || []) : (e && e.message) || String(e);
+      showMessage(msg, true);
     } finally {
       btnSave.disabled = false;
-      btnSave.textContent = "Save";
+      btnSave.textContent = t("save");
     }
   }
 
+  I18n.applyDocument();
+  if (pageTitle) pageTitle.textContent = t("optionsTitle");
+
   btnAdd.addEventListener("click", () => {
     editingId = null;
-    showForm("Add Server");
+    showForm("addServer");
   });
   btnCancel.addEventListener("click", hideForm);
   btnSave.addEventListener("click", handleSave);

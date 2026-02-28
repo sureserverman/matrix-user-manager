@@ -1,0 +1,367 @@
+{
+  "extensionName": {
+    "message": "Matrix User Manager",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "管理 Matrix/Synapse 伺服器與使用者",
+    "description": "Description of the extension."
+  },
+  "optionsTitle": {
+    "message": "Matrix User Manager — 設定",
+    "description": "Options page title."
+  },
+  "addServer": {
+    "message": "新增伺服器",
+    "description": "Add server button and form title."
+  },
+  "editServer": {
+    "message": "編輯伺服器",
+    "description": "Edit server form title."
+  },
+  "serverDomain": {
+    "message": "伺服器網域",
+    "description": "Server domain label."
+  },
+  "serverDomainPlaceholder": {
+    "message": "example.com",
+    "description": "Server domain input placeholder."
+  },
+  "adminUsername": {
+    "message": "管理員使用者名稱",
+    "description": "Admin username label."
+  },
+  "adminUsernamePlaceholder": {
+    "message": "admin",
+    "description": "Admin username placeholder."
+  },
+  "adminPassword": {
+    "message": "管理員密碼",
+    "description": "Admin password label."
+  },
+  "save": {
+    "message": "儲存",
+    "description": "Save button."
+  },
+  "cancel": {
+    "message": "取消",
+    "description": "Cancel button."
+  },
+  "serverUrl": {
+    "message": "伺服器 URL",
+    "description": "Server URL table header."
+  },
+  "domain": {
+    "message": "網域",
+    "description": "Domain table header."
+  },
+  "actions": {
+    "message": "操作",
+    "description": "Actions table header."
+  },
+  "edit": {
+    "message": "編輯",
+    "description": "Edit button."
+  },
+  "delete": {
+    "message": "刪除",
+    "description": "Delete button."
+  },
+  "noServersYet": {
+    "message": "尚未新增伺服器。",
+    "description": "Empty server list message."
+  },
+  "deleteServerConfirm": {
+    "message": "刪除此伺服器？",
+    "description": "Delete server confirmation."
+  },
+  "allFieldsRequired": {
+    "message": "請填寫所有欄位。",
+    "description": "Validation message."
+  },
+  "discoveringServer": {
+    "message": "正在探索伺服器...",
+    "description": "Status while discovering."
+  },
+  "connecting": {
+    "message": "正在連線...",
+    "description": "Status while connecting."
+  },
+  "serverSavedSuccess": {
+    "message": "伺服器已儲存。",
+    "description": "Success message after save."
+  },
+  "manageUsers": {
+    "message": "使用者管理",
+    "description": "Manage page heading."
+  },
+  "userId": {
+    "message": "使用者 ID",
+    "description": "User ID table header."
+  },
+  "displayName": {
+    "message": "顯示名稱",
+    "description": "Display name table header."
+  },
+  "loadMore": {
+    "message": "載入更多",
+    "description": "Load more button."
+  },
+  "loadingUsers": {
+    "message": "正在載入使用者...",
+    "description": "Status while loading users."
+  },
+  "noUsersFound": {
+    "message": "找不到使用者。",
+    "description": "Empty user list."
+  },
+  "usersLoaded": {
+    "message": "已載入 $count$ 位使用者。",
+    "description": "User count status.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deactivated": {
+    "message": "已停用",
+    "description": "Deactivated user label."
+  },
+  "lock": {
+    "message": "鎖定",
+    "description": "Lock button."
+  },
+  "unlock": {
+    "message": "解除鎖定",
+    "description": "Unlock button."
+  },
+  "remove": {
+    "message": "移除",
+    "description": "Remove button."
+  },
+  "cannotLockSelf": {
+    "message": "無法鎖定自己",
+    "description": "Tooltip for disabled lock on self."
+  },
+  "cannotRemoveSelf": {
+    "message": "無法移除自己",
+    "description": "Tooltip for disabled remove on self."
+  },
+  "locking": {
+    "message": "正在鎖定...",
+    "description": "Status while locking."
+  },
+  "unlocking": {
+    "message": "正在解除鎖定...",
+    "description": "Status while unlocking."
+  },
+  "lockedSuccess": {
+    "message": "$user$ 已鎖定。",
+    "description": "Lock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "unlockedSuccess": {
+    "message": "$user$ 已解除鎖定。",
+    "description": "Unlock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeConfirm": {
+    "message": "移除使用者 $user$？帳戶將被停用並刪除。",
+    "description": "Remove user confirmation.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removing": {
+    "message": "正在移除...",
+    "description": "Status while removing."
+  },
+  "removeSuccess": {
+    "message": "$user$ 已移除。",
+    "description": "Remove success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaDeleted": {
+    "message": "（已刪除 $count$ 個媒體檔案）",
+    "description": "Media deleted suffix.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServerSpecified": {
+    "message": "未指定伺服器。",
+    "description": "Error when no server in URL."
+  },
+  "serverNotFound": {
+    "message": "找不到伺服器。",
+    "description": "Error when server id invalid."
+  },
+  "manageUsersTitle": {
+    "message": "使用者管理 — $domain$",
+    "description": "Manage page title with domain.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServersConfigured": {
+    "message": "尚未設定伺服器。",
+    "description": "Popup empty state."
+  },
+  "openSettings": {
+    "message": "開啟設定",
+    "description": "Open settings button."
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings link."
+  },
+  "addUser": {
+    "message": "新增使用者",
+    "description": "Add user button."
+  },
+  "manage": {
+    "message": "管理",
+    "description": "Manage users button."
+  },
+  "username": {
+    "message": "使用者名稱",
+    "description": "Username form label."
+  },
+  "password": {
+    "message": "密碼",
+    "description": "Password form label."
+  },
+  "usernamePlaceholder": {
+    "message": "newuser",
+    "description": "Username placeholder."
+  },
+  "displayNamePlaceholder": {
+    "message": "新使用者",
+    "description": "Display name placeholder."
+  },
+  "create": {
+    "message": "建立",
+    "description": "Create button."
+  },
+  "creating": {
+    "message": "建立中...",
+    "description": "Status while creating user."
+  },
+  "errCannotReachDomain": {
+    "message": "Cannot reach $domain$. Check the domain and your network connection.",
+    "description": "Discovery network error.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "errWellKnownNotFound": {
+    "message": "No .well-known found at $domain$ ($status$).",
+    "description": "Well-known fetch failed.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      },
+      "status": {
+        "content": "$2"
+      }
+    }
+  },
+  "errInvalidWellKnown": {
+    "message": "Invalid .well-known response: missing m.homeserver base_url",
+    "description": "Invalid well-known JSON."
+  },
+  "errCannotReachServer": {
+    "message": "Cannot reach server. Check the URL and your network connection.",
+    "description": "Generic network error."
+  },
+  "errInvalidCredentials": {
+    "message": "Invalid credentials",
+    "description": "Login 401/403."
+  },
+  "errLoginFailed": {
+    "message": "Login failed ($status$)",
+    "description": "Login error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errNoAccessToken": {
+    "message": "No access token in response",
+    "description": "Login response missing token."
+  },
+  "errTokenExpired": {
+    "message": "Access token expired or invalid. Re-add the server in settings.",
+    "description": "401 on API call."
+  },
+  "errRequestFailed": {
+    "message": "Request failed ($status$)",
+    "description": "API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errCannotReachListMedia": {
+    "message": "Cannot reach server to list media.",
+    "description": "Media list network error."
+  },
+  "errFailedToListMedia": {
+    "message": "Failed to list media ($status$)",
+    "description": "Media list API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errEmptyResponse": {
+    "message": "Empty response from server. Check your server configuration.",
+    "description": "Create user empty body."
+  },
+  "userCreated": {
+    "message": "User $user$ created",
+    "description": "Create user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "userUpdated": {
+    "message": "User $user$ updated",
+    "description": "Update user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "errServerNotFound": {
+    "message": "Server not found",
+    "description": "Storage update with invalid id."
+  }
+}

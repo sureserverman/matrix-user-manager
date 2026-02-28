@@ -1,7 +1,7 @@
 (function () {
   document.getElementById("favicon").href = browser.runtime.getURL("icons/icon-48.png");
 
-  const pageTitle = document.getElementById("page-title");
+  const pageTitleDoc = document.getElementById("page-title");
   const statusEl = document.getElementById("status");
   const userList = document.getElementById("user-list");
   const pagination = document.getElementById("pagination");
@@ -13,6 +13,11 @@
   let server = null;
   let nextToken = "0";
   let currentUserId = null;
+
+  function t(key, subs) {
+    if (subs !== undefined) subs = Array.isArray(subs) ? subs : [subs];
+    return browser.i18n.getMessage(key, subs) || key;
+  }
 
   function showStatus(text, type) {
     statusEl.textContent = text;
@@ -38,7 +43,7 @@
     const tdActions = document.createElement("td");
     if (isDeactivated) {
       const span = document.createElement("span");
-      span.textContent = "Deactivated";
+      span.textContent = t("deactivated");
       tdActions.appendChild(span);
     } else {
       const actionsDiv = document.createElement("div");
@@ -46,11 +51,11 @@
 
       const lockBtn = document.createElement("button");
       lockBtn.className = isLocked ? "btn-unlock" : "btn-lock";
-      lockBtn.textContent = isLocked ? "Unlock" : "Lock";
+      lockBtn.textContent = isLocked ? t("unlock") : t("lock");
       lockBtn.dataset.locked = String(isLocked);
       if (isSelf) {
         lockBtn.disabled = true;
-        lockBtn.title = "You cannot lock yourself";
+        lockBtn.title = t("cannotLockSelf");
       } else {
         lockBtn.addEventListener("click", () => handleLock(user.name, lockBtn));
       }
@@ -58,10 +63,10 @@
 
       const removeBtn = document.createElement("button");
       removeBtn.className = "btn-remove";
-      removeBtn.textContent = "Remove";
+      removeBtn.textContent = t("remove");
       if (isSelf) {
         removeBtn.disabled = true;
-        removeBtn.title = "You cannot remove yourself";
+        removeBtn.title = t("cannotRemoveSelf");
       } else {
         removeBtn.addEventListener("click", () => handleRemove(user.name, row, removeBtn));
       }
@@ -75,13 +80,13 @@
   }
 
   async function loadUsers() {
-    showStatus("Loading users...", "info");
+    showStatus(t("loadingUsers"), "info");
     try {
       const data = await MatrixApi.listUsers(server.url, server.accessToken, nextToken);
       const users = data.users || [];
 
       if (users.length === 0 && nextToken === "0") {
-        showStatus("No users found.", "info");
+        showStatus(t("noUsersFound"), "info");
         return;
       }
 
@@ -94,44 +99,43 @@
         pagination.classList.add("hidden");
       }
 
-      showStatus(`${userList.children.length} users loaded.`, "info");
+      showStatus(t("usersLoaded", [userList.children.length]), "info");
     } catch (e) {
-      showStatus(e.message, "error");
+      showStatus(e && e.errorKey ? t(e.errorKey, e.errorSubs || []) : (e && e.message) || String(e), "error");
     }
   }
 
   async function handleLock(userId, btn) {
     const isCurrentlyLocked = btn.dataset.locked === "true";
-    const action = isCurrentlyLocked ? "unlock" : "lock";
 
     btn.disabled = true;
-    btn.textContent = isCurrentlyLocked ? "Unlocking..." : "Locking...";
+    btn.textContent = isCurrentlyLocked ? t("unlocking") : t("locking");
 
     try {
       await MatrixApi.lockUser(server.url, server.accessToken, userId, !isCurrentlyLocked);
       if (isCurrentlyLocked) {
         btn.className = "btn-lock";
-        btn.textContent = "Lock";
+        btn.textContent = t("lock");
         btn.dataset.locked = "false";
       } else {
         btn.className = "btn-unlock";
-        btn.textContent = "Unlock";
+        btn.textContent = t("unlock");
         btn.dataset.locked = "true";
       }
-      showStatus(`${userId} ${action}ed.`, "success");
+      showStatus(isCurrentlyLocked ? t("unlockedSuccess", [userId]) : t("lockedSuccess", [userId]), "success");
     } catch (e) {
-      btn.textContent = isCurrentlyLocked ? "Unlock" : "Lock";
-      showStatus(e.message, "error");
+      btn.textContent = isCurrentlyLocked ? t("unlock") : t("lock");
+      showStatus(e && e.errorKey ? t(e.errorKey, e.errorSubs || []) : (e && e.message) || String(e), "error");
     } finally {
       btn.disabled = false;
     }
   }
 
   async function handleRemove(userId, row, btn) {
-    if (!confirm(`Remove user ${userId}? This will deactivate and erase the account.`)) return;
+    if (!confirm(t("removeConfirm", [userId]))) return;
 
     btn.disabled = true;
-    btn.textContent = "Removing...";
+    btn.textContent = t("removing");
 
     try {
       const result = await MatrixApi.removeUser(server.url, server.accessToken, userId);
@@ -140,20 +144,20 @@
       const lastTd = row.querySelector("td:last-child");
       while (lastTd.firstChild) lastTd.firstChild.remove();
       const span = document.createElement("span");
-      span.textContent = "Deactivated";
+      span.textContent = t("deactivated");
       lastTd.appendChild(span);
-      const mediaMsg = result.media_deleted > 0 ? ` (${result.media_deleted} media files deleted)` : "";
-      showStatus(`${userId} has been removed.${mediaMsg}`, "success");
+      const mediaMsg = result.media_deleted > 0 ? t("mediaDeleted", [result.media_deleted]) : "";
+      showStatus(t("removeSuccess", [userId]) + mediaMsg, "success");
     } catch (e) {
       btn.disabled = false;
-      btn.textContent = "Remove";
-      showStatus(e.message, "error");
+      btn.textContent = t("remove");
+      showStatus(e && e.errorKey ? t(e.errorKey, e.errorSubs || []) : (e && e.message) || String(e), "error");
     }
   }
 
   async function init() {
     if (!serverId) {
-      showStatus("No server specified.", "error");
+      showStatus(t("noServerSpecified"), "error");
       return;
     }
 
@@ -161,12 +165,15 @@
     server = servers.find(s => s.id === serverId);
 
     if (!server) {
-      showStatus("Server not found.", "error");
+      showStatus(t("serverNotFound"), "error");
       return;
     }
 
-    pageTitle.textContent = `Manage Users — ${server.domain}`;
-    document.title = `Manage Users — ${server.domain}`;
+    const titleText = t("manageUsersTitle", [server.domain]);
+    if (pageTitleDoc) pageTitleDoc.textContent = titleText;
+    const pageTitleHead = document.getElementById("page-title-heading");
+    if (pageTitleHead) pageTitleHead.textContent = titleText;
+
     try {
       currentUserId = await MatrixApi.whoami(server.url, server.accessToken);
     } catch (_) {
@@ -174,6 +181,8 @@
     }
     await loadUsers();
   }
+
+  I18n.applyDocument();
 
   btnLoadMore.addEventListener("click", loadUsers);
   init();

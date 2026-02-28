@@ -17,7 +17,12 @@ const Storage = {
   async updateServer(id, updates) {
     const servers = await this.getServers();
     const index = servers.findIndex(s => s.id === id);
-    if (index === -1) throw new Error("Server not found");
+    if (index === -1) {
+      const err = new Error("Server not found");
+      err.errorKey = "errServerNotFound";
+      err.errorSubs = [];
+      throw err;
+    }
     servers[index] = { ...servers[index], ...updates };
     await this.saveServers(servers);
   },

@@ -1,0 +1,367 @@
+{
+  "extensionName": {
+    "message": "Matrix User Manager",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Matrix/Synapseサーバーとユーザーを管理",
+    "description": "Description of the extension."
+  },
+  "optionsTitle": {
+    "message": "Matrix User Manager — 設定",
+    "description": "Options page title."
+  },
+  "addServer": {
+    "message": "サーバーを追加",
+    "description": "Add server button and form title."
+  },
+  "editServer": {
+    "message": "サーバーを編集",
+    "description": "Edit server form title."
+  },
+  "serverDomain": {
+    "message": "サーバーのドメイン",
+    "description": "Server domain label."
+  },
+  "serverDomainPlaceholder": {
+    "message": "example.com",
+    "description": "Server domain input placeholder."
+  },
+  "adminUsername": {
+    "message": "管理者ユーザー名",
+    "description": "Admin username label."
+  },
+  "adminUsernamePlaceholder": {
+    "message": "admin",
+    "description": "Admin username placeholder."
+  },
+  "adminPassword": {
+    "message": "管理者パスワード",
+    "description": "Admin password label."
+  },
+  "save": {
+    "message": "保存",
+    "description": "Save button."
+  },
+  "cancel": {
+    "message": "キャンセル",
+    "description": "Cancel button."
+  },
+  "serverUrl": {
+    "message": "サーバーURL",
+    "description": "Server URL table header."
+  },
+  "domain": {
+    "message": "ドメイン",
+    "description": "Domain table header."
+  },
+  "actions": {
+    "message": "操作",
+    "description": "Actions table header."
+  },
+  "edit": {
+    "message": "編集",
+    "description": "Edit button."
+  },
+  "delete": {
+    "message": "削除",
+    "description": "Delete button."
+  },
+  "noServersYet": {
+    "message": "サーバーがまだ追加されていません。",
+    "description": "Empty server list message."
+  },
+  "deleteServerConfirm": {
+    "message": "このサーバーを削除しますか？",
+    "description": "Delete server confirmation."
+  },
+  "allFieldsRequired": {
+    "message": "すべての項目を入力してください。",
+    "description": "Validation message."
+  },
+  "discoveringServer": {
+    "message": "サーバーを検出中...",
+    "description": "Status while discovering."
+  },
+  "connecting": {
+    "message": "接続中...",
+    "description": "Status while connecting."
+  },
+  "serverSavedSuccess": {
+    "message": "サーバーを保存しました。",
+    "description": "Success message after save."
+  },
+  "manageUsers": {
+    "message": "ユーザー管理",
+    "description": "Manage page heading."
+  },
+  "userId": {
+    "message": "ユーザーID",
+    "description": "User ID table header."
+  },
+  "displayName": {
+    "message": "表示名",
+    "description": "Display name table header."
+  },
+  "loadMore": {
+    "message": "さらに読み込む",
+    "description": "Load more button."
+  },
+  "loadingUsers": {
+    "message": "ユーザーを読み込み中...",
+    "description": "Status while loading users."
+  },
+  "noUsersFound": {
+    "message": "ユーザーが見つかりません。",
+    "description": "Empty user list."
+  },
+  "usersLoaded": {
+    "message": "$count$ 件のユーザーを読み込みました。",
+    "description": "User count status.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "deactivated": {
+    "message": "無効",
+    "description": "Deactivated user label."
+  },
+  "lock": {
+    "message": "ロック",
+    "description": "Lock button."
+  },
+  "unlock": {
+    "message": "ロック解除",
+    "description": "Unlock button."
+  },
+  "remove": {
+    "message": "削除",
+    "description": "Remove button."
+  },
+  "cannotLockSelf": {
+    "message": "自分自身をロックできません",
+    "description": "Tooltip for disabled lock on self."
+  },
+  "cannotRemoveSelf": {
+    "message": "自分自身を削除できません",
+    "description": "Tooltip for disabled remove on self."
+  },
+  "locking": {
+    "message": "ロック中...",
+    "description": "Status while locking."
+  },
+  "unlocking": {
+    "message": "ロック解除中...",
+    "description": "Status while unlocking."
+  },
+  "lockedSuccess": {
+    "message": "$user$ をロックしました。",
+    "description": "Lock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "unlockedSuccess": {
+    "message": "$user$ のロックを解除しました。",
+    "description": "Unlock success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removeConfirm": {
+    "message": "ユーザー $user$ を削除しますか？アカウントは無効化され削除されます。",
+    "description": "Remove user confirmation.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "removing": {
+    "message": "削除中...",
+    "description": "Status while removing."
+  },
+  "removeSuccess": {
+    "message": "$user$ を削除しました。",
+    "description": "Remove success message.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "mediaDeleted": {
+    "message": "（メディアファイル $count$ 件を削除）",
+    "description": "Media deleted suffix.",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServerSpecified": {
+    "message": "サーバーが指定されていません。",
+    "description": "Error when no server in URL."
+  },
+  "serverNotFound": {
+    "message": "サーバーが見つかりません。",
+    "description": "Error when server id invalid."
+  },
+  "manageUsersTitle": {
+    "message": "ユーザー管理 — $domain$",
+    "description": "Manage page title with domain.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "noServersConfigured": {
+    "message": "サーバーが設定されていません。",
+    "description": "Popup empty state."
+  },
+  "openSettings": {
+    "message": "設定を開く",
+    "description": "Open settings button."
+  },
+  "settings": {
+    "message": "設定",
+    "description": "Settings link."
+  },
+  "addUser": {
+    "message": "ユーザーを追加",
+    "description": "Add user button."
+  },
+  "manage": {
+    "message": "管理",
+    "description": "Manage users button."
+  },
+  "username": {
+    "message": "ユーザー名",
+    "description": "Username form label."
+  },
+  "password": {
+    "message": "パスワード",
+    "description": "Password form label."
+  },
+  "usernamePlaceholder": {
+    "message": "newuser",
+    "description": "Username placeholder."
+  },
+  "displayNamePlaceholder": {
+    "message": "新規ユーザー",
+    "description": "Display name placeholder."
+  },
+  "create": {
+    "message": "作成",
+    "description": "Create button."
+  },
+  "creating": {
+    "message": "作成中...",
+    "description": "Status while creating user."
+  },
+  "errCannotReachDomain": {
+    "message": "Cannot reach $domain$. Check the domain and your network connection.",
+    "description": "Discovery network error.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "errWellKnownNotFound": {
+    "message": "No .well-known found at $domain$ ($status$).",
+    "description": "Well-known fetch failed.",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      },
+      "status": {
+        "content": "$2"
+      }
+    }
+  },
+  "errInvalidWellKnown": {
+    "message": "Invalid .well-known response: missing m.homeserver base_url",
+    "description": "Invalid well-known JSON."
+  },
+  "errCannotReachServer": {
+    "message": "Cannot reach server. Check the URL and your network connection.",
+    "description": "Generic network error."
+  },
+  "errInvalidCredentials": {
+    "message": "Invalid credentials",
+    "description": "Login 401/403."
+  },
+  "errLoginFailed": {
+    "message": "Login failed ($status$)",
+    "description": "Login error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errNoAccessToken": {
+    "message": "No access token in response",
+    "description": "Login response missing token."
+  },
+  "errTokenExpired": {
+    "message": "Access token expired or invalid. Re-add the server in settings.",
+    "description": "401 on API call."
+  },
+  "errRequestFailed": {
+    "message": "Request failed ($status$)",
+    "description": "API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errCannotReachListMedia": {
+    "message": "Cannot reach server to list media.",
+    "description": "Media list network error."
+  },
+  "errFailedToListMedia": {
+    "message": "Failed to list media ($status$)",
+    "description": "Media list API error.",
+    "placeholders": {
+      "status": {
+        "content": "$1"
+      }
+    }
+  },
+  "errEmptyResponse": {
+    "message": "Empty response from server. Check your server configuration.",
+    "description": "Create user empty body."
+  },
+  "userCreated": {
+    "message": "User $user$ created",
+    "description": "Create user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "userUpdated": {
+    "message": "User $user$ updated",
+    "description": "Update user success.",
+    "placeholders": {
+      "user": {
+        "content": "$1"
+      }
+    }
+  },
+  "errServerNotFound": {
+    "message": "Server not found",
+    "description": "Storage update with invalid id."
+  }
+}

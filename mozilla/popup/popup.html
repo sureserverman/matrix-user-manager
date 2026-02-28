@@ -7,16 +7,17 @@
 <body>
   <div id="server-list"></div>
   <div id="empty-state" class="hidden">
-    <p>No servers configured.</p>
-    <button id="btn-open-settings" type="button">Open Settings</button>
+    <p data-i18n="noServersConfigured">No servers configured.</p>
+    <button id="btn-open-settings" type="button" data-i18n="openSettings">Open Settings</button>
   </div>
 
   <footer>
-    <a href="#" id="link-settings">Settings</a>
+    <a href="#" id="link-settings" data-i18n="settings">Settings</a>
   </footer>
 
   <script src="../lib/storage.js"></script>
   <script src="../lib/matrix-api.js"></script>
+  <script src="../lib/i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>
