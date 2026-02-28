@@ -28,6 +28,10 @@ Browser extension for Matrix/Synapse admins to add servers and manage users fast
 - Locks/unlocks accounts and deactivates users with `erase: true`
 - Deletes user media files before deactivation
 
+## Privacy
+
+- **[Privacy Policy](PRIVACY.md)** — What data the extension collects, how it is used, and who it is shared with (for Chrome Web Store and similar requirements).
+
 ## Privacy and Permissions
 
 - Stored locally via `browser.storage.local` / `chrome.storage.local`
