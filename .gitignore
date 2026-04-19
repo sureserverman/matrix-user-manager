@@ -11,3 +11,18 @@ docs/plans/
 matrix-user-manager-mobile.xpi
 REPLIT_ANDROID_SYNAPSE_PROMPT.md
 matrix-user-manager-firefox.xpi
+
+# ===== AI Tools =====
+.claude/
+.claude_memory
+.cursorrules
+.cursor/
+.aider*
+.copilot/
+CLAUDE.md
+AGENTS.md
+.github/copilot-instructions.md
+
+# ===== AI / Design Plans =====
+docs/plans/
+plans/
