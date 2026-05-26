@@ -28,3 +28,6 @@ docs/plans/
 plans/
 matrix-user-manager-mozilla.xpi
 docs/reddit-chrome-extensions.md
+
+# ===== Security audit reports (local-only) =====
+sec-audit-report-*.md
