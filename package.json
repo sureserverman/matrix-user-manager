@@ -1,0 +1,9 @@
+{
+  "name": "matrix-user-manager",
+  "version": "1.4.0",
+  "private": true,
+  "description": "Dev-only test harness for the Matrix User Manager browser extension. No build step and no runtime dependencies: the tests load the extension's global-script modules (chrome/lib/*.js) inside a Node vm sandbox seeded with mocked browser APIs.",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
