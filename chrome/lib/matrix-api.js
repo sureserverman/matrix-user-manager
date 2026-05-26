@@ -22,7 +22,11 @@ const MatrixApi = {
     if (!baseUrl) {
       throw apiError("errInvalidWellKnown", null, "Invalid .well-known response: missing m.homeserver base_url");
     }
-    return baseUrl.replace(/\/+$/, "");
+    const cleanUrl = baseUrl.replace(/\/+$/, "");
+    if (!/^https:\/\//i.test(cleanUrl)) {
+      throw apiError(null, [], "Homeserver advertised a non-HTTPS base_url; refusing to send the access token over cleartext.");
+    }
+    return cleanUrl;
   },
 
   async login(serverUrl, username, password) {

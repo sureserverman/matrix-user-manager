@@ -4,25 +4,34 @@ on:
   push:
     tags: ['v*']
 
+permissions:
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
 
       - name: Extract version from tag
         id: version
         run: echo "number=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - name: Set version in mozilla manifest
+        env:
+          VERSION: ${{ steps.version.outputs.number }}
         run: >
-          jq --arg v "${{ steps.version.outputs.number }}"
+          jq --arg v "$VERSION"
           '.version = $v' mozilla/manifest.json > tmp.json
           && mv tmp.json mozilla/manifest.json
 
       - name: Set version in chrome manifest
+        env:
+          VERSION: ${{ steps.version.outputs.number }}
         run: >
-          jq --arg v "${{ steps.version.outputs.number }}"
+          jq --arg v "$VERSION"
           '.version = $v' chrome/manifest.json > tmp.json
           && mv tmp.json chrome/manifest.json
 
@@ -30,7 +39,7 @@ jobs:
         run: cd mozilla && zip -r ../matrix-user-manager.xpi .
 
       - name: Publish to AMO
-        uses: browser-actions/release-firefox-addon@latest
+        uses: browser-actions/release-firefox-addon@f8026bff59385bee825dbf33b0887570f196f804 # v0.2.1
         with:
           addon-id: 'matrix-user-manager@sureserverman'
           addon-path: matrix-user-manager.xpi
